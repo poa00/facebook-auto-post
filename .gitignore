@@ -133,3 +133,4 @@ articles.db
 chromedriver.exe
 debug.log
 geckodriver.log
+config.ini
