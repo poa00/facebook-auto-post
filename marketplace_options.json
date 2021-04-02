@@ -11,7 +11,9 @@
             "Marketplace": "Marketplace",
             "Category": "Categoría",
             "Next Button": "Siguiente",
-            "Post": "Publicar"
+            "Post": "Publicar",
+            "Collection": "Colección de tus artículos de Marketplace",
+            "Delete": "Eliminar"
         },
         "categories": {
             "Herramientas": 2,
