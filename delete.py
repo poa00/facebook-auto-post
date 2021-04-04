@@ -4,7 +4,6 @@ import sqlite3
 from configparser import ConfigParser
 from time import sleep
 
-import pyautogui
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
