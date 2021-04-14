@@ -71,6 +71,13 @@ class App:
         # Sometimes ask before delete the post
         if (self.ask_to_continue):
             try:
+                close_button = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@aria-label="' + self.marketplace_options["labels"]["Close"] + '"]')))
+                close_button.click()
+                sleep(self.time_to_sleep)
+            except TimeoutException:
+                print("Did not ask me when deleting the post")
+
+            try:
                 delete_button = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@aria-label="' + self.marketplace_options["labels"]["Delete"] + '"]')))
                 delete_button.click()
                 sleep(self.time_to_sleep)

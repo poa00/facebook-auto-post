@@ -13,7 +13,8 @@
             "Next Button": "Siguiente",
             "Post": "Publicar",
             "Collection": "Colección de tus artículos de Marketplace",
-            "Delete": "Eliminar"
+            "Delete": "Eliminar",
+            "Close": "Cerrar"
         },
         "categories": {
             "Herramientas": 2,
