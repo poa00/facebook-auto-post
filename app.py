@@ -39,7 +39,7 @@ class App:
         for post in self.posts:
             self.move_from_home_to_marketplace_create_item()
             self.create_post(post)  
-        sleep(self.time_to_sleep)  
+        sleep(2)
         self.driver.quit()
         
         
