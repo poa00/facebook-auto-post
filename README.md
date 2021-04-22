@@ -9,6 +9,9 @@ This project is to do auto post in the marketplace of Facebook. I have tested on
 5. Run app.py to post in Facebook Marketplace.
 6. Run delete.py to delete all your post in Facebook Marketplace. This because in Facebook you cannot post the same post multiple times. (I think Facebook has a bug, because all the time I try to delete a post and refresh the page, appears again) 
 
+Explanation of the code 🖥️⌨️:
+https://youtu.be/WPBVR3aGzxk
+
 marketplace_options.json -> I have added only the devices, categories, states, etc, all about in spanish. You need to add more languages right here and maybe more options. I only use to post in Marketplace things about videogames, electronic and cellphones.
 
 The code needs a lot of changes. You could help me with improves. 
