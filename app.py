@@ -44,21 +44,21 @@ class App:
         
         
     def log_in(self):
-        email_input = WebDriverWait(self.driver, 3).until(EC.presence_of_element_located((By.ID, "email")))
+        email_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.ID, "email")))
         email_input.send_keys(self.email)
-        password_input = WebDriverWait(self.driver, 3).until(EC.presence_of_element_located((By.ID, "pass")))
+        password_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.ID, "pass")))
         password_input.send_keys(self.password)
-        login_button = WebDriverWait(self.driver, 3).until(EC.element_to_be_clickable((By.XPATH, "//*[@type='submit']")))
+        login_button = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//*[@type='submit']")))
         login_button.click()
         
 
     def move_from_home_to_marketplace_create_item(self):
-        WebDriverWait(self.driver, 3).until(EC.element_to_be_clickable((By.XPATH, '//a[@aria-label="Facebook"]')))
+        WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, '//a[@aria-label="Facebook"]')))
         self.driver.get(self.marketplace_url)
 
 
     def add_photos_to_post(self, post_folder):
-        photo_button = WebDriverWait(self.driver, 3).until(EC.element_to_be_clickable((By.XPATH, '//div[@aria-label="' + self.marketplace_options["labels"]["Add Photos"] + '"]')))
+        photo_button = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, '//div[@aria-label="' + self.marketplace_options["labels"]["Add Photos"] + '"]')))
         photo_button.click()
         sleep(2)
         pyautogui.hotkey('ctrl', 'l')
@@ -82,11 +82,11 @@ class App:
     
 
     def add_text_to_post(self, title, price, description):
-        title_input = WebDriverWait(self.driver, 3).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Title"] + "']/div/div/input")))
+        title_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Title"] + "']/div/div/input")))
         title_input.send_keys(title)
-        price_input = WebDriverWait(self.driver, 3).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Price"] +  "']/div/div/input")))
+        price_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Price"] +  "']/div/div/input")))
         price_input.send_keys(price)
-        description_input = WebDriverWait(self.driver, 3).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Description"] +  "']/div/div/textarea")))
+        description_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Description"] +  "']/div/div/textarea")))
         description_input.send_keys(description.replace("\r\n", "\n"))
 
 
@@ -114,37 +114,37 @@ class App:
         self.add_photos_to_post(post[8])
         self.add_text_to_post(post[1], post[2], post[7])
 
-        category_input = WebDriverWait(self.driver, 3).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Category"] +  "']")))
+        category_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Category"] +  "']")))
         category_input.click()
         sleep(self.time_to_sleep)
-        category_option = WebDriverWait(self.driver, 3).until(EC.presence_of_element_located((By.XPATH, "//div[@data-pagelet='root']/div[@role='dialog']/div/div/span/div/div[" + self.get_element_position("categories", post[3]) + "]")))
+        category_option = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//div[@role='dialog']/div/div/span/div/div[" + self.get_element_position("categories", post[3]) + "]")))
         category_option.click()
         sleep(self.time_to_sleep)
         
-        state_input = WebDriverWait(self.driver, 3).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["State"] +  "']")))
+        state_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["State"] +  "']")))
         state_input.click()
         sleep(self.time_to_sleep)
-        state_option = WebDriverWait(self.driver, 3).until(EC.presence_of_element_located((By.XPATH, '//div[@data-pagelet="root"]/div/div/div/div/div/div[@role="menuitemradio"][' + self.get_element_position("states", post[4]) + ']')))
+        state_option = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@role="menu"]/div/div/div[1]/div/div[' + self.get_element_position("states", post[4]) + ']')))
         state_option.click()
         sleep(self.time_to_sleep)
 
         if post[5] == "platforms":
-            type_input = WebDriverWait(self.driver, 3).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Platform"] +  "']")))
+            type_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Platform"] +  "']")))
             type_input.click()
             sleep(self.time_to_sleep)
-            type_option = WebDriverWait(self.driver, 3).until(EC.presence_of_element_located((By.XPATH, '//div[@data-pagelet="root"]/div[@role="menu"]/div/div/div/div/div[' + self.get_element_position("platforms", post[6]) + ']')))
+            type_option = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@role="menu"]/div/div/div[1]/div/div[' + self.get_element_position("platforms", post[6]) + ']')))
             type_option.click()
             sleep(self.time_to_sleep)
         
         if post[5] == "devices":
-            type_input = WebDriverWait(self.driver, 3).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Device Name"] +  "']")))
+            type_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Device Name"] +  "']")))
             type_input.click()
             sleep(self.time_to_sleep)
-            type_option = WebDriverWait(self.driver, 3).until(EC.presence_of_element_located((By.XPATH, '//div[@data-pagelet="root"]/div[@role="menu"]/div/div/div/div/div[' + self.get_element_position("devices", post[6]) + ']')))
+            type_option = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@role="menu"]/div/div/div[1]/div/div[' + self.get_element_position("devices", post[6]) + ']')))
             type_option.click()
             sleep(self.time_to_sleep)
     
-        next_button = WebDriverWait(self.driver, 3).until(EC.presence_of_element_located((By.XPATH, "//div[@aria-label='" + self.marketplace_options["labels"]["Next Button"] +  "']")))
+        next_button = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//div[@aria-label='" + self.marketplace_options["labels"]["Next Button"] +  "']")))
         next_button.click()
         
         self.post_in_more_places(post[9])
@@ -160,11 +160,11 @@ class App:
         groups_positions = groups.split(",")
 
         for group_position in groups_positions:
-            group_input = WebDriverWait(self.driver, 3).until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='" + self.marketplace_options["labels"]["Marketplace"] +  "']/div/div/div/div[4]/div/div/div/div/div/div/div/div/div/div[2]/div[" + group_position + "]")))
+            group_input = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='" + self.marketplace_options["labels"]["Marketplace"] +  "']/div/div/div/div[4]/div/div/div/div/div/div/div/div/div/div[2]/div[" + group_position + "]")))
             group_input.click()
             sleep(self.time_to_sleep)
 
-        post_button = WebDriverWait(self.driver, 3).until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='" + self.marketplace_options["labels"]["Post"] +  "']")))
+        post_button = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='" + self.marketplace_options["labels"]["Post"] +  "']")))
         post_button.click()
 
 
