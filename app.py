@@ -58,7 +58,7 @@ class App:
 
 
     def add_photos_to_post(self, post_folder):
-        photo_button = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, '//div[@aria-label="' + self.marketplace_options["labels"]["Add Photos"] + '"]')))
+        photo_button = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, '//div[@aria-label="' + self.marketplace_options["labels"]["Marketplace"] + '"]/div/div[3]/div[1]/div/div[@role="button"]')))
         photo_button.click()
         sleep(2)
         pyautogui.hotkey('ctrl', 'l')
