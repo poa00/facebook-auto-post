@@ -33,8 +33,8 @@ class App:
         self.driver.get(self.main_url)
         self.log_in()
         self.move_from_home_to_marketplace_your_posts()
-        while(self.ask_to_continue):
-            self.delete_current_post() 
+        #while(self.ask_to_continue):
+        self.delete_current_post() 
         sleep(self.time_to_sleep)
         #self.driver.quit()
         
@@ -60,9 +60,13 @@ class App:
             buttons = self.driver.find_elements_by_xpath('//div[@aria-label="' + self.marketplace_options["labels"]["Collection"] + '"]/div/div/div[2]/div/div/div[3]/div/span/div/div[2]/div/div[2]/div/div[2]/div/div')
             buttons[len(buttons) - 1].click()
             sleep(self.time_to_sleep)
+            sleep(self.time_to_sleep)
+            sleep(self.time_to_sleep)
 
-            delete_option = self.driver.find_elements_by_xpath("//div[@data-pagelet='root']/div[@role='menu']/div[1]/div/div[1]/div/div")
+            delete_option = self.driver.find_elements_by_xpath("//div[@role='menu']/div[1]/div/div[1]/div/div")
             delete_option[len(delete_option) - 1].click()
+            sleep(self.time_to_sleep)
+            sleep(self.time_to_sleep)
             sleep(self.time_to_sleep)
         except:
             print("There is no more post to delete")
@@ -70,19 +74,22 @@ class App:
 
         # Sometimes ask before delete the post
         if (self.ask_to_continue):
-            try:
-                close_button = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@aria-label="' + self.marketplace_options["labels"]["Close"] + '"]')))
-                close_button.click()
-                sleep(self.time_to_sleep)
-            except TimeoutException:
-                print("Did not ask me when deleting the post")
+            delete_button = self.driver.find_elements_by_xpath('//div[@aria-label="' + self.marketplace_options["labels"]["Delete"] + '"]')
+            close_button = self.driver.find_elements_by_xpath('//div[@aria-label="' + self.marketplace_options["labels"]["Close"] + '"]')
 
-            try:
-                delete_button = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@aria-label="' + self.marketplace_options["labels"]["Delete"] + '"]')))
+            print(delete_button)
+            print(close_button)
+            if (delete_button):
                 delete_button.click()
                 sleep(self.time_to_sleep)
-            except TimeoutException:
-                print("Did not ask me when deleting the post")
+                sleep(self.time_to_sleep)
+                sleep(self.time_to_sleep)
+
+            elif (close_button):
+                close_button.click()
+                sleep(self.time_to_sleep)
+                sleep(self.time_to_sleep)
+                sleep(self.time_to_sleep)
 
 
 if __name__ == '__main__':
