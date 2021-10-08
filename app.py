@@ -124,7 +124,7 @@ class App:
         state_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["State"] +  "']")))
         state_input.click()
         sleep(self.time_to_sleep)
-        state_option = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@role="menu"]/div/div/div[1]/div/div[' + self.get_element_position("states", post[4]) + ']')))
+        state_option = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@role="menu"]/div/div/div/div/div[1]/div/div[' + self.get_element_position("states", post[4]) + ']')))
         state_option.click()
         sleep(self.time_to_sleep)
 
@@ -160,7 +160,7 @@ class App:
         groups_positions = groups.split(",")
 
         for group_position in groups_positions:
-            group_input = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='" + self.marketplace_options["labels"]["Marketplace"] +  "']/div/div/div/div[4]/div/div/div/div/div/div/div/div/div/div[2]/div[" + group_position + "]")))
+            group_input = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='" + self.marketplace_options["labels"]["Marketplace"] +  "']/div/div/div/div[4]/div/div/div/div/div/div/div[1]/div/div/div[2]/div[" + group_position + "]")))
             group_input.click()
             sleep(self.time_to_sleep)
 
