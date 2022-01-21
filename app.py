@@ -149,6 +149,9 @@ class App:
         
         self.post_in_more_places(post[9])
 
+        post_button = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='" + self.marketplace_options["labels"]["Post"] +  "']")))
+        post_button.click()
+
 
     def get_element_position(self, key, specific):
         if specific in self.marketplace_options[key]:
@@ -163,9 +166,6 @@ class App:
             group_input = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='" + self.marketplace_options["labels"]["Marketplace"] +  "']/div/div/div/div[4]/div/div/div/div/div/div/div[1]/div/div/div[2]/div[" + group_position + "]")))
             group_input.click()
             sleep(self.time_to_sleep)
-
-        post_button = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='" + self.marketplace_options["labels"]["Post"] +  "']")))
-        post_button.click()
 
 
 if __name__ == '__main__':

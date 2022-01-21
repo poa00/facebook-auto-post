@@ -11,3 +11,5 @@ pywin32==300
 selenium==3.141.0
 toml==0.10.2
 urllib3==1.26.2
+PyAutoGUI==0.9.53
+selenium==4.1.0
