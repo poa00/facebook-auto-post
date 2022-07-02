@@ -117,7 +117,7 @@ class App:
         category_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Category"] +  "']")))
         category_input.click()
         sleep(self.time_to_sleep)
-        category_option = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//div[@role='dialog']/div/div/span/div/div[" + self.get_element_position("categories", post[3]) + "]")))
+        category_option = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//div[@role='dialog']/div/div/div/span/div/div[" + self.get_element_position("categories", post[3]) + "]")))
         category_option.click()
         sleep(self.time_to_sleep)
         
@@ -152,6 +152,7 @@ class App:
 
         post_button = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='" + self.marketplace_options["labels"]["Post"] +  "']")))
         post_button.click()
+        sleep(self.time_to_sleep)
 
 
     def get_element_position(self, key, specific):
