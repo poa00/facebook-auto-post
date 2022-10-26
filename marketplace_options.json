@@ -14,7 +14,8 @@
             "Post": "Publicar",
             "Collection": "Colección de tus artículos de Marketplace",
             "Delete": "Eliminar",
-            "Close": "Cerrar"
+            "Close": "Cerrar",
+            "Product Labels": "Etiquetas de producto"
         },
         "categories": {
             "Herramientas": 2,

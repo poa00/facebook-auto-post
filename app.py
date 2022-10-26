@@ -81,13 +81,15 @@ class App:
         sleep(self.time_to_sleep)
     
 
-    def add_text_to_post(self, title, price, description):
+    def add_text_to_post(self, title, price, description, label):
         title_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Title"] + "']/div/div/input")))
         title_input.send_keys(title)
         price_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Price"] +  "']/div/div/input")))
         price_input.send_keys(price)
         description_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Description"] +  "']/div/div/textarea")))
         description_input.send_keys(description.replace("\r\n", "\n"))
+        label_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Product Labels"] + "']/div/div/div/div[2]/textarea")))
+        label_input.send_keys(label)
 
 
     def fetch_all_posts(self):
@@ -112,7 +114,7 @@ class App:
 
     def create_post(self, post):
         self.add_photos_to_post(post[8])
-        self.add_text_to_post(post[1], post[2], post[7])
+        self.add_text_to_post(post[1], post[2], post[7], post[10])
 
         category_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Category"] +  "']")))
         category_input.click()
