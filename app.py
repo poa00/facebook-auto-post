@@ -88,8 +88,9 @@ class App:
         price_input.send_keys(price)
         description_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Description"] +  "']/div/div/textarea")))
         description_input.send_keys(description.replace("\r\n", "\n"))
-        label_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Product Labels"] + "']/div/div/div/div[2]/textarea")))
-        label_input.send_keys(label)
+        if label:
+            label_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Product Labels"] + "']/div/div/div/div[2]/textarea")))
+            label_input.send_keys(label)
 
 
     def fetch_all_posts(self):
