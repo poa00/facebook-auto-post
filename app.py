@@ -10,6 +10,7 @@ from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.firefox.service import Service
 
 class App:
     def __init__(self, email= "", password= "", 
@@ -29,7 +30,7 @@ class App:
         options.binary_location = binary_location
         options.set_preference("dom.webnotifications.enabled", False)
         # geckodriver allows you to use emojis, chromedriver does not
-        self.driver = webdriver.Firefox(executable_path=driver_location, options=options)
+        self.driver = webdriver.Firefox(service=Service(driver_location), options=options)
         self.driver.maximize_window()
         self.main_url = main_url
         self.marketplace_url = marketplace_url

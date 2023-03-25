@@ -136,3 +136,4 @@ debug.log
 geckodriver.log
 config.ini
 .vscode/
+.idea/
