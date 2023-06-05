@@ -1,7 +1,7 @@
 # facebook-auto-post
 Auto Post in your Marketplace for Facebook.
 
-## Desription
+## Description
 Auto Post in your Marketplace for Facebook is an automated tool that allows you to seamlessly post and manage your products and services on Facebook Marketplace. This application utilizes Python with Selenium to automate the posting process and retrieves the necessary data from your locally stored SQLite database.
 
 ![🤖_Facebook_Auto_Post_Marketplace_para_No_TécnicosExpress](https://github.com/eselejuanito/facebook-auto-post/assets/10732249/3e31e3d7-8d2b-475d-ac54-d09c9a91bf3a)
