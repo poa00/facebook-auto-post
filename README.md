@@ -1,6 +1,8 @@
 # facebook-auto-post
 This project is to do auto post in the marketplace of Facebook. I have tested on Windows 10.
 
+![🤖_Facebook_Auto_Post_Marketplace_para_No_TécnicosExpress](https://github.com/eselejuanito/facebook-auto-post/assets/10732249/3e31e3d7-8d2b-475d-ac54-d09c9a91bf3a)
+
 ## Instructions:
 1. Fill the config.ini with the right info (check config_example.ini like example).
 2. Install the requirements
