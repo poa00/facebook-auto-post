@@ -1,26 +1,112 @@
 # facebook-auto-post
-This project is to do auto post in the marketplace of Facebook. I have tested on Windows 10.
+Auto Post in your Marketplace for Facebook.
 
-## Instructions:
-1. Fill the config.ini with the right info (check config_example.ini like example).
-2. Install the requirements
-3. Run create_database.py and fill with some posts to Facebook Marketplace.
-4. Need to download the driver for Firefox: https://github.com/mozilla/geckodriver/releases (the firefox driver allows you to use emojis, chrome does not)
-5. Run app.py to post in Facebook Marketplace.
-6. Run delete.py to delete all your post in Facebook Marketplace. This because in Facebook you cannot post the same post multiple times. (I think Facebook has a bug, because all the time I try to delete a post and refresh the page, appears again) 
+## Description
+Auto Post in your Marketplace for Facebook is an automated tool that allows you to seamlessly post and manage your products and services on Facebook Marketplace. This application utilizes Python with Selenium to automate the posting process and retrieves the necessary data from your locally stored SQLite database.
 
-Explanation of the code 🖥️⌨️:
-https://youtu.be/WPBVR3aGzxk
+![🤖_Facebook_Auto_Post_Marketplace_para_No_TécnicosExpress](https://github.com/eselejuanito/facebook-auto-post/assets/10732249/3e31e3d7-8d2b-475d-ac54-d09c9a91bf3a)
 
-marketplace_options.json -> I have added only the devices, categories, states, etc, all about in spanish. You need to add more languages right here and maybe more options. I only use to post in Marketplace things about videogames, electronic and cellphones.
+## Video Tutorial
+Spanish
+[Full Video with explanation](https://youtu.be/OKwrIdM0lrY)
+[Short Video about the Project](https://youtube.com/shorts/o9EwFgHPKBY?feature=share)
 
-The code needs a lot of changes. You could help me with improves. 
+English
+[Full Video with explanation](https://youtu.be/UNWULh6jlZc)
+[Short Video about the Project](https://youtube.com/shorts/Knio3G8qBa8?feature=share)
 
-Subscribe to Youtube 🎬:
-https://www.youtube.com/channel/UCnDCaOvsAMetyHOz9q0iaVA?sub_confirmation=1
+## Table of Contents
+
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contribution](#contribution)
+- [Contact](#contact)
+
+## Features
+
+- Automated posting of products and services on Facebook Marketplace.
+- Retrieve data from your locally stored SQLite database for seamless posting.
+- Add tags and emojis for your posts.
+
+## Prerequisites
+
+Before using this tool, ensure that you have the following:
+
+- Python installed on your system.
+- Selenium library installed.
+- SQLite database with the necessary data for your Marketplace posts.
+- Firefox
+- geckodriver.exe
+
+## Installation
+   
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/eselejuanito/facebook-auto-post.git
+   ```
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd auto-post-facebook-marketplace
+   ```
+
+3. Create an virtual enviroment 
+
+   ```bash
+   python -m venv env
+   ```
+   
+   Then acvivate it.
+   
+   ```bash
+   env\Scripts\activate
+   ```
+   
+4. Install the required dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+5. Make a copy and rename config_example.ini to config.ini. Change your user, password and right path of your post's photos.
+
+6. Run python create_database.py and add your data in the table name 'post'. 
+   ```bash
+   python create_database.py
+   ```
+   
+7. Run python app.py
+   ```bash
+   python app.py
+   ```
+
+
+## Usage
+
+1. Configure your SQLite database with the necessary product/service data.
+2. Run the tool:
+
+   ```bash
+   python app.py
+   ```
+
+   The tool will automate the posting process.
+
+## Contribution
+
+Contributions are welcome! If you have any suggestions, enhancements, or bug fixes, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch.
+3. Make your changes.
+4. Submit a pull request.
+
+## Contact
+
+For any questions, suggestions, or feedback, please feel free to contact me at [eselejuanito](https://linktr.ee/eselejuanito).
 
 For help me 💰:
 paypal.me/eselejuanito
-
-Email:
-eselejuanito@gmail.com
