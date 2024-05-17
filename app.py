@@ -12,9 +12,11 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.firefox.service import Service
 
+MAIN_URL = "https://www.facebook.com/"
+MARKETPLACE_URL = "https://www.facebook.com/marketplace/create/item"
+
 class App:
-    def __init__(self, email= "", password= "", 
-                 path="", language="", main_url="", marketplace_url="", binary_location="", driver_location="", time_to_sleep=""):
+    def __init__(self, email= "", password= "", language="", path="", binary_location="", driver_location="", time_to_sleep=""):
         self.email = email
         self.password = password
         self.path = path
@@ -32,8 +34,8 @@ class App:
         # geckodriver allows you to use emojis, chromedriver does not
         self.driver = webdriver.Firefox(service=Service(driver_location), options=options)
         self.driver.maximize_window()
-        self.main_url = main_url
-        self.marketplace_url = marketplace_url
+        self.main_url = MAIN_URL
+        self.marketplace_url = MARKETPLACE_URL
         self.driver.get(self.main_url)
         self.log_in()
         self.posts = self.fetch_all_posts()
@@ -89,7 +91,7 @@ class App:
         price_input.send_keys(price)
         description_button = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@aria-label="' + self.marketplace_options["labels"]["Marketplace"] + '"]/div/div[9]/div/div/div/div[@role="button"]')))
         description_button.click()
-        description_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Description"] +  "']/div/div/textarea")))
+        description_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Description"] +  "']/div/div/div/textarea")))
         description_input.send_keys(description.replace("\r\n", "\n"))
         if label:
             label_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Product Labels"] + "']/div/div/div/div[2]/textarea")))
@@ -181,4 +183,4 @@ if __name__ == '__main__':
     config_object.read("config.ini")
     facebook = config_object["FACEBOOK"]
     configuration = config_object["CONFIG"]
-    app = App(facebook["email"], facebook["password"], configuration["images_path"], configuration["language"], facebook["main_url"], facebook["marketplace_url"], configuration["binary_location"], configuration["driver_location"], configuration["time_to_sleep"])
+    app = App(facebook["email"], facebook["password"], configuration["language"], configuration["images_path"], configuration["binary_location"], configuration["driver_location"], configuration["time_to_sleep"])
