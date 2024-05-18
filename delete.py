@@ -10,6 +10,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
+MARKETPLACE_YOUR_POSTS = "https://www.facebook.com/marketplace/you/selling"
+
 class App:
     def __init__(self, email= "", password= "", language="", main_url="", marketplace_your_posts="", binary_location="", driver_location="", time_to_sleep=""):
         self.email = email
@@ -97,4 +99,4 @@ if __name__ == '__main__':
     config_object.read("config.ini")
     facebook = config_object["FACEBOOK"]
     configuration = config_object["CONFIG"]
-    app = App(facebook["email"], facebook["password"], configuration["language"], facebook["main_url"], facebook["marketplace_your_posts"], configuration["binary_location"], configuration["driver_location"], configuration["time_to_sleep"])
+    app = App(facebook["email"], facebook["password"], configuration["language"], facebook["main_url"], MARKETPLACE_YOUR_POSTS, configuration["binary_location"], configuration["driver_location"], configuration["time_to_sleep"])
