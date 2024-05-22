@@ -69,7 +69,7 @@ class App:
         pyautogui.write(self.path + post_folder)
         pyautogui.sleep(self.time_to_sleep)
         pyautogui.press('enter')
-        pyautogui.sleep(self.time_to_sleep)
+        pyautogui.sleep(2)
         pyautogui.press('tab')
         pyautogui.sleep(self.time_to_sleep)
         pyautogui.press('tab')
