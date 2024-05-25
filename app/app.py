@@ -1,38 +1,48 @@
 # -*- coding: utf-8 -*-
-import json
-import sqlite3
+import json, sqlite3, pyautogui
 from configparser import ConfigParser
 from time import sleep
 
-import pyautogui
 from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
 
 MAIN_URL = "https://www.facebook.com/"
 MARKETPLACE_URL = "https://www.facebook.com/marketplace/create/item"
 
 class App:
-    def __init__(self, email= "", password= "", language="", path="", binary_location="", driver_location="", time_to_sleep=""):
+    def __init__(self, email="", password="", language="en", path="C:/Users/%USERPROFILE%/Pictures", time_to_sleep="0.7", browser="Chrome"):
         self.email = email
         self.password = password
         self.path = path
+        self.browser = browser
         self.language = language
         self.marketplace_options = None
         self.posts = None
         self.time_to_sleep = float(time_to_sleep)
+        self.emojis_available = False
         with open('marketplace_options.json', encoding='utf-8') as f:
             self.marketplace_options = json.load(f)
             self.marketplace_options = self.marketplace_options[self.language]
         # To remove the pop up notification window
-        options = Options()
-        options.binary_location = binary_location
-        options.set_preference("dom.webnotifications.enabled", False)
-        # geckodriver allows you to use emojis, chromedriver does not
-        self.driver = webdriver.Firefox(service=Service(driver_location), options=options)
+        if browser == "Firefox":
+            self.emojis_available = True
+            options = FirefoxOptions()
+            options.set_preference("dom.webnotifications.enabled", False)
+            self.driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options=options)
+        else:
+            self.emojis_available = False
+            options = ChromeOptions()
+            options.add_argument("--disable-notifications")
+            self.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()),options=options)
+
         self.driver.maximize_window()
         self.main_url = MAIN_URL
         self.marketplace_url = MARKETPLACE_URL
@@ -41,11 +51,10 @@ class App:
         self.posts = self.fetch_all_posts()
         for post in self.posts:
             self.move_from_home_to_marketplace_create_item()
-            self.create_post(post)  
+            self.create_post(post)
         sleep(2)
         self.driver.quit()
-        
-        
+
     def log_in(self):
         email_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.ID, "email")))
         email_input.send_keys(self.email)
@@ -53,7 +62,7 @@ class App:
         password_input.send_keys(self.password)
         login_button = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//*[@type='submit']")))
         login_button.click()
-        
+
 
     def move_from_home_to_marketplace_create_item(self):
         WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, '//a[@aria-label="Facebook"]')))
@@ -82,7 +91,7 @@ class App:
         pyautogui.sleep(self.time_to_sleep)
         pyautogui.press('enter')
         pyautogui.sleep(self.time_to_sleep)
-    
+
 
     def add_text_to_post(self, title, price, description, label):
         title_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Title"] + "']/div/div/input")))
@@ -118,9 +127,16 @@ class App:
         return posts
 
 
+    def clean_characters_bmp(self, text):
+        return ''.join(c for c in text if ord(c) <= 0xFFFF).strip()
+
+
     def create_post(self, post):
         self.add_photos_to_post(post[8])
-        self.add_text_to_post(post[1], post[2], post[7], post[10])
+        if not self.emojis_available:
+            self.add_text_to_post(self.clean_characters_bmp(post[1]), post[2], self.clean_characters_bmp(post[7]), post[10])
+        else:
+            self.add_text_to_post(post[1], post[2], post[7], post[10])
 
         category_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Category"] +  "']")))
         category_input.click()
@@ -128,7 +144,7 @@ class App:
         category_option = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//div[@role='dialog']/div/div/div/span/div/div[" + self.get_element_position("categories", post[3]) + "]")))
         category_option.click()
         sleep(self.time_to_sleep)
-        
+
         state_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["State"] +  "']")))
         state_input.click()
         sleep(self.time_to_sleep)
@@ -143,7 +159,7 @@ class App:
             type_option = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@role="menu"]/div/div/div[1]/div/div[' + self.get_element_position("platforms", post[6]) + ']')))
             type_option.click()
             sleep(self.time_to_sleep)
-        
+
         if post[5] == "devices":
             type_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Device Name"] +  "']")))
             type_input.click()
@@ -151,10 +167,10 @@ class App:
             type_option = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@role="menu"]/div/div/div[1]/div/div[' + self.get_element_position("devices", post[6]) + ']')))
             type_option.click()
             sleep(self.time_to_sleep)
-    
+
         next_button = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//div[@aria-label='" + self.marketplace_options["labels"]["Next Button"] +  "']")))
         next_button.click()
-        
+
         self.post_in_more_places(post[9])
         sleep(self.time_to_sleep)
 
@@ -183,4 +199,4 @@ if __name__ == '__main__':
     config_object.read("config.ini")
     facebook = config_object["FACEBOOK"]
     configuration = config_object["CONFIG"]
-    app = App(facebook["email"], facebook["password"], configuration["language"], configuration["images_path"], configuration["binary_location"], configuration["driver_location"], configuration["time_to_sleep"])
+    app = App(facebook["email"], facebook["password"], configuration["language"], configuration["images_path"], configuration["time_to_sleep"], configuration["browser"])

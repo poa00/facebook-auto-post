@@ -1,19 +1,25 @@
 # -*- coding: utf-8 -*-
 import json
-import sqlite3
 from configparser import ConfigParser
 from time import sleep
 
 from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 MARKETPLACE_YOUR_POSTS = "https://www.facebook.com/marketplace/you/selling"
+MAIN_URL = "https://www.facebook.com/"
+MARKETPLACE_URL = "https://www.facebook.com/marketplace/create/item"
 
 class App:
-    def __init__(self, email= "", password= "", language="", main_url="", marketplace_your_posts="", binary_location="", driver_location="", time_to_sleep=""):
+    def __init__(self, email="", password="", language="en", time_to_sleep="0.7", browser="chrome"):
         self.email = email
         self.password = password
         self.language = language
@@ -24,14 +30,21 @@ class App:
             self.marketplace_options = json.load(f)
             self.marketplace_options = self.marketplace_options[self.language]
         # To remove the pop up notification window
-        options = Options()
-        options.binary_location = binary_location
-        options.set_preference("dom.webnotifications.enabled", False)
-        # geckodriver allows you to use emojis, chromedriver does not
-        self.driver = webdriver.Firefox(executable_path=driver_location, options=options)
+        if browser == "Firefox":
+            self.emojis_available = True
+            options = FirefoxOptions()
+            options.set_preference("dom.webnotifications.enabled", False)
+            self.driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options=options)
+        else:
+            # geckodriver allows you to use emojis, chromedriver does not
+            self.emojis_available = False
+            options = ChromeOptions()
+            options.add_argument("--disable-notifications")
+            self.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()),options=options)
+
         self.driver.maximize_window()
-        self.main_url = main_url
-        self.marketplace_your_posts = marketplace_your_posts
+        self.main_url = MAIN_URL
+        self.marketplace_your_posts = MARKETPLACE_YOUR_POSTS
         self.driver.get(self.main_url)
         self.log_in()
         self.move_from_home_to_marketplace_your_posts()
@@ -93,10 +106,9 @@ class App:
                 sleep(self.time_to_sleep)
                 sleep(self.time_to_sleep)
 
-
 if __name__ == '__main__':
     config_object = ConfigParser()
     config_object.read("config.ini")
     facebook = config_object["FACEBOOK"]
     configuration = config_object["CONFIG"]
-    app = App(facebook["email"], facebook["password"], configuration["language"], facebook["main_url"], MARKETPLACE_YOUR_POSTS, configuration["binary_location"], configuration["driver_location"], configuration["time_to_sleep"])
+    app = App(facebook["email"], facebook["password"], configuration["language"], configuration["time_to_sleep"], configuration["browser"])
