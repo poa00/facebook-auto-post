@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import json, sqlite3, pyautogui
+import json, sqlite3, pyautogui, sys, os
 from configparser import ConfigParser
 from time import sleep
 
@@ -28,7 +28,7 @@ class App:
         self.posts = None
         self.time_to_sleep = float(time_to_sleep)
         self.emojis_available = False
-        with open('marketplace_options.json', encoding='utf-8') as f:
+        with open(self.resource_path('marketplace_options.json'), encoding='utf-8') as f:
             self.marketplace_options = json.load(f)
             self.marketplace_options = self.marketplace_options[self.language]
         # To remove the pop up notification window
@@ -92,6 +92,13 @@ class App:
         pyautogui.press('enter')
         pyautogui.sleep(self.time_to_sleep)
 
+    def resource_path(self, relative_path):
+        try:
+            base_path = sys._MEIPASS
+        except Exception:
+            base_path = os.path.abspath(".")
+
+        return os.path.join(base_path, relative_path)
 
     def add_text_to_post(self, title, price, description, label):
         title_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Title"] + "']/div/div/input")))
