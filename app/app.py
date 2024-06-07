@@ -70,7 +70,12 @@ class App:
 
 
     def add_photos_to_post(self, post_folder):
-        photo_button = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, '//div[@aria-label="' + self.marketplace_options["labels"]["Marketplace"] + '"]/div/div[3]/div[2]/div/div[@role="button"]')))
+        if self.language == "es":
+            # Latinoamerica
+            photo_button = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, '//div[@aria-label="' + self.marketplace_options["labels"]["Marketplace"] + '"]/div/div[3]/div[2]/div/div[@role="button"]')))
+        else:
+            # English version - New version of facebook with photo and video buttons
+            photo_button = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, '//div[@aria-label="' + self.marketplace_options["labels"]["Marketplace"] + '"]/div/div[3]/div[1]/div/div/div[1]')))
         photo_button.click()
         pyautogui.sleep(2)
         pyautogui.hotkey('ctrl', 'l', interval=0.5)
@@ -105,12 +110,22 @@ class App:
         title_input.send_keys(title)
         price_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Price"] +  "']/div/div/input")))
         price_input.send_keys(price)
-        description_button = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@aria-label="' + self.marketplace_options["labels"]["Marketplace"] + '"]/div/div[9]/div/div/div/div[@role="button"]')))
-        description_button.click()
+        # More Details
+        if self.language == "es":
+            # Latinoamerica
+            more_details_button = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@aria-label="' + self.marketplace_options["labels"]["Marketplace"] + '"]/div/div[9]/div/div/div/div[@role="button"]')))
+            more_details_button.click()
+        else:
+            # English version - New version of facebook with different position of more details button
+            more_details_button = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@aria-label="' + self.marketplace_options["labels"]["Marketplace"] + '"]/div/div[11]/div/div/div/div[@role="button"]')))
+            more_details_button.click()
         description_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Description"] +  "']/div/div/div/textarea")))
         description_input.send_keys(description.replace("\r\n", "\n"))
         if label:
-            label_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Product Labels"] + "']/div/div/div/div[2]/textarea")))
+            label_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Product Labels"] + "']/div/div/div/div[2]/div/textarea")))
+            # To add the last label, you need to add a comma
+            if not label.endswith(","):
+                label += ","
             label_input.send_keys(label)
 
 
@@ -180,7 +195,7 @@ class App:
 
         self.post_in_more_places(post[9])
         sleep(self.time_to_sleep)
-
+        
         post_button = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='" + self.marketplace_options["labels"]["Post"] +  "']")))
         post_button.click()
         sleep(self.time_to_sleep)

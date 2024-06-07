@@ -129,7 +129,7 @@ dmypy.json
 .pyre/
 
 # Specific of this project
-articles.db
+*.db
 chromedriver.exe
 geckodriver.exe
 debug.log
