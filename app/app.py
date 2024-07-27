@@ -106,9 +106,9 @@ class App:
         return os.path.join(base_path, relative_path)
 
     def add_text_to_post(self, title, price, description, label):
-        title_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Title"] + "']/div/div/input")))
+        title_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Title"] + "']/input")))
         title_input.send_keys(title)
-        price_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Price"] +  "']/div/div/input")))
+        price_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Price"] +  "']/input")))
         price_input.send_keys(price)
         # More Details
         if self.language == "es":
@@ -119,10 +119,10 @@ class App:
             # English version - New version of facebook with different position of more details button
             more_details_button = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@aria-label="' + self.marketplace_options["labels"]["Marketplace"] + '"]/div/div[11]/div/div/div/div[@role="button"]')))
             more_details_button.click()
-        description_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Description"] +  "']/div/div/div/textarea")))
+        description_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Description"] +  "']/div/textarea")))
         description_input.send_keys(description.replace("\r\n", "\n"))
         if label:
-            label_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Product Labels"] + "']/div/div/div/div[2]/div/textarea")))
+            label_input = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//label[@aria-label='" + self.marketplace_options["labels"]["Product Labels"] + "']/div/div[2]/div/textarea")))
             # To add the last label, you need to add a comma
             if not label.endswith(","):
                 label += ","
@@ -134,7 +134,7 @@ class App:
         try:
             sqliteConnection = sqlite3.connect('articles.db')
             cursor = sqliteConnection.cursor()
-            sqlite_select_query = """SELECT * from post"""
+            sqlite_select_query = """SELECT * from item"""
             cursor.execute(sqlite_select_query)
             posts = cursor.fetchall()
             cursor.close()
